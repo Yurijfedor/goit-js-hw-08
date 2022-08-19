@@ -16,10 +16,15 @@ refs.input.addEventListener('input', throttle(onChangeInput, 500));
 refs.textarea.addEventListener('input', throttle(onChangeTextarea, 500));
 
 function onFormSubmit(evt) {
+  const inputValue = refs.input.value;
+  const textareaValue = refs.textarea.value;
+  if (!inputValue || !textareaValue) {
+    return alert('sorry, all fields must be filled');
+  }
   evt.preventDefault();
   const dataForm = {
-    email: refs.input.value,
-    message: refs.textarea.value,
+    email: inputValue,
+    message: textareaValue,
   };
   console.log(dataForm);
   evt.currentTarget.reset();
