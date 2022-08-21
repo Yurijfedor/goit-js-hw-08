@@ -15,20 +15,23 @@ refs.form.addEventListener('input', onFormInput);
 refs.input.addEventListener('input', throttle(onChangeInput, 500));
 refs.textarea.addEventListener('input', throttle(onChangeTextarea, 500));
 
-const inputValue = refs.input.value;
-const textareaValue = refs.textarea.value;
+console.log(refs.input.value, refs.textarea.value);
 function onFormSubmit(evt) {
-  if (!inputValue || !textareaValue) {
+  if (!refs.input.value || !refs.textarea.value) {
     return alert('sorry, all fields must be filled');
   }
   evt.preventDefault();
-  const dataForm = {
-    email: inputValue,
-    message: textareaValue,
+
+  const inputValue = refs.input.value;
+  const textareaValue = refs.textarea.value;
+  const formData = {
+    inputValue,
+    textareaValue,
   };
-  console.log(dataForm);
-  evt.currentTarget.reset();
+
+  evt.target.reset();
   localStorage.removeItem(STORAGE_KEY);
+  console.log(formData);
 }
 
 function onFormInput() {
@@ -38,12 +41,12 @@ function onFormInput() {
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(localStorageObj));
 }
-let email = inputValue;
+let email = refs.input.value;
 function onChangeInput(evt) {
   email = evt.target.value;
 }
 
-let message = textareaValue;
+let message = refs.textarea.value;
 function onChangeTextarea(evt) {
   message = evt.target.value;
 }
